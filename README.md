@@ -1,4 +1,7 @@
-# NIMBU OS - Minimal Linux Kernel
+cd "c:\Users\Somesh\Desktop\NIMBU OS"
+git init
+git add .
+git commit -m "Initial commit: NIMBU OS - Minimal x86 Linux kernel"# NIMBU OS - Minimal Linux Kernel
 
 **A Minimal Linux-Based Operating System**
 
@@ -821,4 +824,5 @@ reboot
 ```
 
 Enjoy building OS kernels! 🚀
+# NIMBU-OS-
 # NIMBU-OS-

@@ -1,0 +1,32 @@
+# Build artifacts
+build/
+*.o
+*.a
+*.elf
+*.bin
+*.iso
+*.img
+
+# Dependencies
+*.d
+*.su
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+*.log
+boot.log
+serial.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# System files
+.Thumbs.db
