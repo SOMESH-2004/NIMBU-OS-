@@ -3,6 +3,11 @@ git init
 git add .
 git commit -m "Initial commit: NIMBU OS - Minimal x86 Linux kernel"# NIMBU OS - Minimal Linux Kernel
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![x86 Architecture](https://img.shields.io/badge/Architecture-x86%20(i686)-blue.svg)](https://wiki.osdev.org/)
+[![Status: Complete](https://img.shields.io/badge/Status-Complete-brightgreen.svg)](#)
+[![Documentation](https://img.shields.io/badge/Documentation-Full-brightblue.svg)](DOCUMENTATION_INDEX.md)
+
 **A Minimal Linux-Based Operating System**
 
 ZOHO SETU Project #10 | Software Domain | Version 1.0
@@ -11,7 +16,7 @@ ZOHO SETU Project #10 | Software Domain | Version 1.0
 
 ---
 
-## Table of Contents
+## 📑 Table of Contents
 
 1. [Project Overview](#project-overview)
 2. [System Architecture](#system-architecture)
@@ -22,7 +27,9 @@ ZOHO SETU Project #10 | Software Domain | Version 1.0
 7. [Component Documentation](#component-documentation)
 8. [Implementation Details](#implementation-details)
 9. [Shell Commands](#shell-commands)
-10. [Troubleshooting](#troubleshooting)
+10. [Documentation Files](#documentation-files)
+11. [Contributing](#contributing)
+12. [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -656,6 +663,116 @@ nimbu@localhost:~$ info
 ```
 
 ---
+
+## Documentation Files
+
+### Technical Documentation
+
+NIMBU OS includes comprehensive technical documentation:
+
+- 📖 **[DOCUMENTATION.md](DOCUMENTATION.md)** - Complete technical reference (4100+ lines)
+- 📚 **[API_REFERENCE.md](API_REFERENCE.md)** - Complete API documentation (2500+ lines)
+- 🔍 **[SOURCE_CODE_GUIDE.md](SOURCE_CODE_GUIDE.md)** - Implementation walkthroughs (2800+ lines)
+- 🗺️ **[DOCUMENTATION_INDEX.md](DOCUMENTATION_INDEX.md)** - Master navigation guide
+- 📊 **[VISUAL_REFERENCE.md](VISUAL_REFERENCE.md)** - Diagrams and visual guides (800+ lines)
+- 📋 **[ARCHITECTURE.md](ARCHITECTURE.md)** - Architecture overview
+- 📈 **[SOURCE_CODE_SUMMARY.md](SOURCE_CODE_SUMMARY.md)** - Code statistics
+
+**Quick Start**: [DOCUMENTATION_INDEX.md](DOCUMENTATION_INDEX.md) has learning paths for different user types.
+
+### GitHub & Community Files
+
+- 🤝 **[CONTRIBUTING.md](CONTRIBUTING.md)** - Contribution guidelines, coding standards, development workflow
+- 📜 **[CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)** - Community code of conduct
+- 🔐 **[SECURITY.md](SECURITY.md)** - Security policy and reporting guidelines
+- 📝 **[LICENSE](LICENSE)** - MIT License
+- 📋 **[CHANGELOG.md](CHANGELOG.md)** - Version history and release notes
+- 🗓️ **[ROADMAP.md](ROADMAP.md)** - Feature roadmap and future plans
+- 🔄 **[.github/workflows/ci.yml](.github/workflows/ci.yml)** - GitHub Actions CI/CD pipeline
+- 📋 **[.github/ISSUE_TEMPLATE/](.github/ISSUE_TEMPLATE/)** - GitHub issue templates
+- 📋 **[.github/pull_request_template.md](.github/pull_request_template.md)** - Pull request template
+
+---
+
+## Contributing
+
+Contributions are welcome! We appreciate all kinds of contributions:
+
+- 🐛 **Bug fixes** - Report and fix issues
+- ✨ **Features** - Implement new capabilities
+- 📖 **Documentation** - Improve and expand docs
+- 🎓 **Learning** - Share knowledge and help others
+- 🔧 **Improvements** - Refactor and optimize code
+
+### Quick Start for Contributors
+
+1. **Read** [CONTRIBUTING.md](CONTRIBUTING.md) - Full contribution guidelines
+2. **Fork** the repository on GitHub
+3. **Create** a feature branch from `develop`
+4. **Make** your changes with clear commit messages
+5. **Test** thoroughly in QEMU
+6. **Submit** a pull request with description
+
+### Development Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/NIMBU-OS.git
+cd NIMBU-OS
+
+# Build the project
+make clean
+make all
+
+# Run in QEMU
+make run
+```
+
+### Making Changes
+
+- Keep code minimal and focused
+- Add comments for complex logic
+- Follow [coding standards](CONTRIBUTING.md#coding-standards)
+- Update relevant documentation
+- Test on QEMU
+- Write clear commit messages
+
+### Need Help?
+
+- Check [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines
+- Review [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) for community standards
+- Open an issue for discussions
+- Join community discussions
+
+---
+
+## License
+
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+Permissions:
+- ✅ Commercial use
+- ✅ Modification
+- ✅ Distribution
+- ✅ Private use
+
+Conditions:
+- ⚠️ License and copyright notice must be included
+
+---
+
+## Additional Resources
+
+- **Project Info**: [README.md](README.md) (this file)
+- **Getting Started**: [DOCUMENTATION_INDEX.md](DOCUMENTATION_INDEX.md)
+- **Version History**: [CHANGELOG.md](CHANGELOG.md)
+- **Future Plans**: [ROADMAP.md](ROADMAP.md)
+- **Bug Reports**: [SECURITY.md](SECURITY.md) for security issues
+- **Feature Ideas**: Use GitHub Issues with `enhancement` label
+
+---
+
+## 
 
 ## Troubleshooting
 

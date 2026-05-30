@@ -6,27 +6,62 @@ build/
 *.bin
 *.iso
 *.img
+*.so
 
-# Dependencies
+# Compiler dependencies
 *.d
 *.su
+*.gch
+*.depend
 
-# IDE
+# IDE and Editors
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
 .DS_Store
+.project
+.cproject
+*.code-workspace
+*.xcodeproj/
+*.xcworkspace/
 
-# Logs
+# Logs and Debugging
 *.log
 boot.log
 serial.log
+.gdb_history
+core
+core.*
+*.core
 
 # Temporary files
 *.tmp
 *.temp
+*.bak
+*.backup
 
 # System files
 .Thumbs.db
+.AppleDouble
+.LSOverride
+Thumbs.db
+
+# Python (if using scripts)
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+
+# Environment
+.env
+.env.local
+venv/
+.venv/
+
+# Generated
+*.swp
+*.swo
+

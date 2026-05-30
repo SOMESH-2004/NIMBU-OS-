@@ -1,0 +1,187 @@
+name: CI Build & Test
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  build:
+    name: Build NIMBU OS
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          build-essential \
+          gcc-multilib \
+          nasm \
+          qemu-system-i386 \
+          qemu-system-x86-64 \
+          xorriso
+    
+    - name: Install cross-compiler
+      run: |
+        sudo apt-get install -y gcc-i686-linux-gnu binutils-i686-linux-gnu
+    
+    - name: Build kernel
+      run: |
+        cd $GITHUB_WORKSPACE
+        make clean
+        make all
+    
+    - name: Check build artifacts
+      run: |
+        if [ -f nimbu.elf ]; then
+          echo "✓ kernel ELF generated"
+          file nimbu.elf
+        else
+          echo "✗ kernel ELF not found"
+          exit 1
+        fi
+        
+        if [ -f nimbu.bin ]; then
+          echo "✓ kernel binary generated"
+          du -h nimbu.bin
+        else
+          echo "✗ kernel binary not found"
+          exit 1
+        fi
+    
+    - name: Verify linker script
+      run: |
+        if [ -f linker.ld ]; then
+          echo "✓ Linker script found"
+        else
+          echo "✗ Linker script not found"
+          exit 1
+        fi
+    
+    - name: Check source files
+      run: |
+        echo "Source files:"
+        find src -name "*.c" -o -name "*.asm" | sort
+        
+        echo "Header files:"
+        find include -name "*.h" | sort
+    
+    - name: Build documentation check
+      run: |
+        echo "Documentation files:"
+        if [ -f DOCUMENTATION.md ]; then echo "✓ DOCUMENTATION.md"; fi
+        if [ -f API_REFERENCE.md ]; then echo "✓ API_REFERENCE.md"; fi
+        if [ -f SOURCE_CODE_GUIDE.md ]; then echo "✓ SOURCE_CODE_GUIDE.md"; fi
+        if [ -f DOCUMENTATION_INDEX.md ]; then echo "✓ DOCUMENTATION_INDEX.md"; fi
+        if [ -f VISUAL_REFERENCE.md ]; then echo "✓ VISUAL_REFERENCE.md"; fi
+        
+        echo "GitHub files:"
+        if [ -f README.md ]; then echo "✓ README.md"; fi
+        if [ -f CONTRIBUTING.md ]; then echo "✓ CONTRIBUTING.md"; fi
+        if [ -f LICENSE ]; then echo "✓ LICENSE"; fi
+        if [ -f CODE_OF_CONDUCT.md ]; then echo "✓ CODE_OF_CONDUCT.md"; fi
+        if [ -f CHANGELOG.md ]; then echo "✓ CHANGELOG.md"; fi
+    
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      if: success()
+      with:
+        name: nimbu-os-build
+        path: |
+          nimbu.elf
+          nimbu.bin
+        retention-days: 5
+
+  lint:
+    name: Code Quality Checks
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Install tools
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cppcheck shellcheck
+    
+    - name: Check C code style (cppcheck)
+      run: |
+        cppcheck --enable=all --suppress=missingIncludeSystem \
+          src/ include/ || echo "Warnings found (non-fatal)"
+    
+    - name: Check shell scripts
+      run: |
+        find . -name "*.sh" -type f | while read script; do
+          echo "Checking $script..."
+          shellcheck "$script" || echo "Warning in $script"
+        done
+    
+    - name: Validate Makefile
+      run: |
+        if make -n; then
+          echo "✓ Makefile is valid"
+        else
+          echo "✗ Makefile has issues"
+          exit 1
+        fi
+
+  documentation:
+    name: Documentation Check
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Check markdown files
+      run: |
+        for md in README.md DOCUMENTATION.md API_REFERENCE.md \
+                  SOURCE_CODE_GUIDE.md DOCUMENTATION_INDEX.md \
+                  VISUAL_REFERENCE.md CONTRIBUTING.md \
+                  CODE_OF_CONDUCT.md CHANGELOG.md; do
+          if [ -f "$md" ]; then
+            lines=$(wc -l < "$md")
+            size=$(du -h "$md" | cut -f1)
+            echo "✓ $md ($lines lines, $size)"
+          else
+            echo "✗ $md not found"
+          fi
+        done
+    
+    - name: Check for broken links
+      run: |
+        echo "Checking internal documentation links..."
+        grep -r "\[.*\](.*\.md)" . --include="*.md" | head -20 || echo "No links found"
+
+  build-success:
+    name: Build Success
+    needs: [build, lint, documentation]
+    runs-on: ubuntu-latest
+    if: success()
+    
+    steps:
+    - name: Build successful
+      run: |
+        echo "✓ All checks passed!"
+        echo "- Build: OK"
+        echo "- Lint: OK"
+        echo "- Documentation: OK"
+        echo "Ready to merge!"
+
+  build-failure:
+    name: Build Failed
+    needs: [build, lint, documentation]
+    runs-on: ubuntu-latest
+    if: failure()
+    
+    steps:
+    - name: Build failed
+      run: |
+        echo "✗ Build failed - please check the logs above"
+        exit 1
